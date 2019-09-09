@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Overlay Gsap</title>
+
+  <style>
+    body {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+
+    .content {
+      width: 100vw;
+      height: 100vh;
+      background: #fab1a0;
+      z-index: 1;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform-origin: center;
+      padding: 20px;
+      position: relative;
+    }
+
+    .content .brand {
+      color: #ffffff;
+      font-size: 4em;
+      letter-spacing: 3px;
+      text-decoration: none;
+      position: absolute;
+      top: 20px;
+      left: 0;
+      opacity: 0;
+      transition: .5s;
+      font-weight: bold;
+    }
+
+    .brand:hover {
+      color: #000;
+    }
+
+    .social-midia {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 0;
+      opacity: 0;
+      transition: .5s;
+    }
+
+    .social-midia ul {
+      list-style: none;
+    }
+
+    .social-midia ul li {
+      padding-bottom: 150px;
+      transform: rotate(90deg);
+    }
+
+    .social-midia a {
+      color: #ffffff;
+      font-size: 2em;
+      transition: .5s;
+      letter-spacing: 3px;
+      text-decoration: none;
+    }
+
+    .social-midia a:hover {
+      color: #000;
+    }
+
+    .overlay-1 {
+      width: 100%;
+      height: 100vh;
+      background: #ff7675;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .overlay-2 {
+      display: block;
+      width: 100%;
+      height: 100vh;
+      background: #ffffff;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .menu-btn {
+      position: absolute;
+      top: 30px;
+      right: 0;
+      color: #ffffff;
+      font-size: 2em;
+      text-decoration: none;
+      font-weight: bold;
+      letter-spacing: 2px;
+      opacity: 0;
+      transition: .5s;
+    }
+
+    .menu-btn:hover {
+      color: #000;
+    }
+
+    .menu-content {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #ffffff;
+      display: none;
+      border-radius: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="content">
+    <header>
+      <a href="" class="brand">hey</a>
+      <a href="" class="menu-btn">Menu</a>
+      <div class="menu-content">
+
+      </div>
+      <div class="social-midia">
+        <ul>
+          <li>
+            <a href="">Instagram</a>
+          </li>
+          <li>
+            <a href="">Facebook</a>
+          </li>
+        </ul>
+      </div>
+
+    </header>
+  </div>
+  <div class="overlay-1"></div>
+  <div class="overlay-2"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
+  <script>
+    const overlay1 = document.querySelector('.overlay-1');
+    const overlay2 = document.querySelector('.overlay-2');
+    const content = document.querySelector('.content');
+    const brand = document.querySelector('.brand');
+    const socialMidia = document.querySelector('.social-midia');
+    const btnMenu = document.querySelector('.menu-btn');
+    const contentMenu = document.querySelector('.menu-content');
+
+    const tl = new TimelineMax();
+    const tl2 = new TimelineMax({ paused: true });
+    console.log(overlay1);
+
+    tl.to(content, 2, { scale: 0.6, ease: Expo.easeInOut, borderRadius: '20px' }, '-=1')
+    tl.from(overlay1, 1.5, { width: 0, ease: Expo.easeInOut })
+    tl.to(content, 1, { scale: 0.7, ease: Expo.easeInOut, borderRadius: '20px' }, '-=0.8')
+    tl.from(overlay2, 1.5, { width: 0, ease: Expo.easeInOut }, '-=1')
+    tl.to(brand, .4, { x: 60, opacity: 1 })
+    tl.to(socialMidia, .4, { x: -40, opacity: 1 })
+    tl.to(btnMenu, .4, { x: -40, opacity: 1 })
+
+   
+
+
+    /*tl.reverse();
+    btnMenu.addEventListener('click', (e) => {
+      e.preventDefault();
+      btnMenu.innerHTML = 'X';
+      contentMenu.classList.add('is-open');
+      tl2.play();
+      if(btnMenu.classList.contains('is-open')) {
+        btnMenu.addEventListener('click', (e) => {
+          tl2.reversed();
+        })
+      }
+    });*/
+
+
+    tl2.to(contentMenu, 2, { scale: 0.6, ease: Expo.easeInOut, borderRadius: '20px', display: 'block' });
+
+    tl2.reverse();
+    btnMenu.addEventListener('click', (e) => {
+      e.preventDefault();
+      btnMenu.innerHTML = 'X';
+      contentMenu.classList.add('is-open');
+      tl2.reversed(!tl2.reversed());
+    });
+
+
+
+
+
+
+
+
+
+  </script>
+</body>
+
+</html>
